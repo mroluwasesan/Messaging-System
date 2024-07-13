@@ -6,6 +6,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from datetime import datetime
 
+
 # Initialize Flask application
 app = Flask(__name__)
 
@@ -29,6 +30,7 @@ def send_email_task(self, to_email):
     # Email credentials (should be handled securely in production)
     sender_email = "oluwasesanrotimi2@gmail.com"
     sender_password = "cezlmrzsloeuaawu"
+
 
     # Construct email message
     msg = MIMEMultipart()
