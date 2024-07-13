@@ -2,9 +2,11 @@ from celery import Celery
 
 def make_celery(app):
     celery = Celery(
-        app.import_name,
-        backend=app.config['CELERY_RESULT_BACKEND'],
-        broker=app.config['CELERY_BROKER_URL']
-    )
+    __name__,
+    backend='rpc://',  # Example: Using RPC as backend
+    broker='pyamqp://guest@localhost//'  # Example: Using RabbitMQ as broker
+)
+
+def make_celery(app):
     celery.conf.update(app.config)
     return celery
