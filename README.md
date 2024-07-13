@@ -104,32 +104,15 @@
    ## Nginx Configuration (for production)
 
    Configure Nginx to serve the Flask application and handle static files. Example configuration:
+   - sample file in the nginx.conf file within the config folder.
+   - Replace example.com with your domain and /path/to/static/files with the actual path to your static files directory.
 
 
-   </pre>
+   ## Testing the Endpoints
+   - Use ngrok to expose your local Flask application (ngrok http 5000). Then, access the endpoints:
 
-   ```nginx
-
-   server {
-      listen 80;
-      server_name example.com;
-
-      location / {
-         proxy_pass http://localhost:5000;
-         proxy_set_header Host $host;
-         proxy_set_header X-Real-IP $remote_addr;
-         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-      }
-
-      location /static {
-         alias /path/to/static/files;
-      }
-   }
-
-   ```
-   </pre>
-
-   Replace example.com with your domain and /path/to/static/files with the actual path to your static files directory.
+   - Send email: http://your_ngrok_url/sendmail?sendmail=you_email@gmail.com
+   - Log entry: http://your_ngrok_url/talktome
 
    ## Contributing
 
