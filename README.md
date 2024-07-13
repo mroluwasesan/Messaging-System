@@ -55,7 +55,7 @@
 
    Ensure the log file exists:
 
-    </pre>
+   </pre>
 
    ```bash
 
@@ -68,7 +68,7 @@
    ## Change Ownership to the Current User:
    Change the ownership of the log file to the user who will run the application:
 
-    </pre>
+   </pre>
 
    ```bash
 
