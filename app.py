@@ -1,22 +1,16 @@
 from flask import Flask, request
-from celery import Celery
-import smtplib
+from celery_app import make_celery
+from tasks import send_mail_task
 import logging
-from datetime import datetime
+import os
 
 app = Flask(__name__)
-app.config['CELERY_BROKER_URL'] = 'pyamqp://guest@rabbitmq//'
+app.config['CELERY_BROKER_URL'] = 'pyamqp://guest@localhost//'
 app.config['CELERY_RESULT_BACKEND'] = 'rpc://'
 
-celery = Celery(app.name, broker=app.config['CELERY_BROKER_URL'])
-celery.conf.update(app.config)
+celery = make_celery(app)
 
 logging.basicConfig(filename='/var/log/messaging_system.log', level=logging.INFO)
-
-@celery.task
-def send_email(to_email):
-    with smtplib.SMTP('localhost') as server:
-        server.sendmail('your_email@example.com', to_email, 'This is a test email')
 
 @app.route('/')
 def index():
@@ -24,15 +18,14 @@ def index():
     talktome = request.args.get('talktome')
 
     if sendmail:
-        send_email.delay(sendmail)
-        return f"Email will be sent to {sendmail}"
-    
+        send_mail_task.delay(sendmail)
+        return f"Email to {sendmail} has been queued."
+
     if talktome:
-        current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        logging.info(f"Talk to me requested at {current_time}")
-        return "Current time logged."
+        logging.info(f"Talk to me request received at {os.path.join(os.path.dirname(__file__), '/var/log/messaging_system.log')}")
+        return "Current time has been logged."
 
     return "Welcome to the messaging system!"
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True)
