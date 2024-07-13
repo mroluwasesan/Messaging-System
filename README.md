@@ -95,15 +95,14 @@ Replace your_domain.com with your actual domain.
 
    - Clone the repository:
    
-   <pre>
+   </pre>
 
-      ``` bash
+   ``` bash
 
       git clone https://github.com/mroluwasesan/Messaging-System.git
       cd Messaging-System 
       
-      ``` 
-
+   ```
    </pre>
 
    -  Set up virtual environment:
@@ -121,33 +120,60 @@ Replace your_domain.com with your actual domain.
 
    - Install dependencies:
 
-      bash
+   </pre>
 
-pip install -r requirements.txt
-Configure RabbitMQ:
+   ``` bash
 
-Ensure RabbitMQ is installed and running. Update CELERY_BROKER_URL in app.py and celery_app.py if necessary.
+   pip install -r requirements.txt
+   
+   ```
 
-Running the Application
+   </pre>
 
-Starting RabbitMQ
-Start RabbitMQ server if not already running:
 
-bash
-Copy code
-sudo systemctl start rabbitmq-server
-Starting Celery Worker
-In the virtual environment, start Celery worker for processing tasks:
+   - Configure RabbitMQ:
+   
+      Ensure RabbitMQ is installed and running. Update CELERY_BROKER_URL in `app.py` if necessary.
 
-bash
-Copy code
-celery -A tasks worker --loglevel=info
-Running Flask Application
-In a separate terminal within the virtual environment, run the Flask application:
+   ## Running the Application
 
-bash
-Copy code
-python app.py
+   ## Starting RabbitMQ
+   
+   Start RabbitMQ server if not already running:
+
+   </pre>
+
+   ``` bash
+
+   sudo systemctl start rabbitmq-server
+
+   ```
+
+   </pre>
+
+   ## Starting Celery Worker
+
+   In the virtual environment, start Celery worker for processing tasks:
+
+   </pre>
+   ``` bash
+
+      celery -A tasks worker --loglevel=info
+      
+   ```
+   </pre>
+
+   ## Running Flask Application
+   
+   In a separate terminal within the virtual environment, run the Flask application:
+
+   </pre>
+   ``` bash
+
+   python app.py
+
+   ```
+   </pre>
 Accessing the Application
 Open a web browser and navigate to http://localhost:5000/.
 Use query parameters ?sendmail=<email_address> or ?talktome=true to test email sending and logging functionalities.
