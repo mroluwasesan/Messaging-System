@@ -51,6 +51,33 @@
    </pre>
 
 
+   ## Create the Log File:
+
+   Ensure the log file exists:
+
+    </pre>
+
+   ```bash
+
+   sudo touch /var/log/messaging_system.log
+     
+   ```
+
+   </pre>
+
+   ## Change Ownership to the Current User:
+   Change the ownership of the log file to the user who will run the application:
+
+    </pre>
+
+   ```bash
+
+   sudo chown $USER:$USER /var/log/messaging_system.log
+  
+   ```
+
+   </pre>
+
    - Configure RabbitMQ:
    
       Ensure RabbitMQ is installed and running. Update CELERY_BROKER_URL in `app.py` if necessary.
