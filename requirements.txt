@@ -1,6 +1,7 @@
-Flask==2.1.1
-celery==5.2.3
-
-https://2589-102-88-69-36.ngrok-free.app/?sendmail=mr.oluwasesan@gmail.com
-
-https://2589-102-88-69-36.ngrok-free.app/?talktome
+## Requirements
+- Python 3.x
+- RabbitMQ
+- Nginx
+- Flask
+- Celery
+- ngrok
