@@ -17,40 +17,30 @@ Before running this application, ensure you have the following installed:
 
 - Clone the repository:
 
-bash
+   git clone https://github.com/mroluwasesan/Messaging-System.git
 
-git clone https://github.com/mroluwasesan/Messaging-System.git
-
-cd messaging-system
+   cd messaging-system
 
 - Install dependencies:
 
-bash
-
-pip install -r requirements.txt
+   pip install -r requirements.txt
 
 - Configure Gmail SMTP:
 
-Enable less secure app access in your Gmail account settings or generate an app-specific password.
-Update sender_email and sender_password in app.py with your Gmail credentials.
+   Enable less secure app access in your Gmail account settings or generate an app-specific password.
+   Update sender_email and sender_password in app.py with your Gmail credentials.
 
 - Start RabbitMQ:
 
-bash
-
-sudo service rabbitmq-server start
+   sudo service rabbitmq-server start
 
 - Start Celery worker:
 
-bash
+   celery -A app worker --loglevel=info
 
-celery -A app worker --loglevel=info
+- Run the Flask application:  
 
-- Run the Flask application:
-
-bash
-
-python app.py
+   python app.py
 
 ## Usage
 
