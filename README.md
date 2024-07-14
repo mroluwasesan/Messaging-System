@@ -137,15 +137,25 @@
    
 ### Create a systemd from app.py, mails.py and ngrok
 
-   ```bash
+   
    for flaskapp.service
    
    1. create service
+      
+   </pre>
+
+   ``` bash
    
    sudo nano /etc/systemd/system/myflaskapp.service
+   ```
+   </pre>
    
    3. A configuration
-    
+
+    </pre>
+
+   ``` bash
+
    [Unit]
    Description=Flask App
    After=network.target
@@ -160,19 +170,37 @@
    
    [Install]
    WantedBy=multi-user.target
+
+   ```
+   </pre>
    
    4. Reload Systemd and Start the Service:
-   
+
+    </pre>
+
+   ``` bash
    sudo systemctl daemon-reload
    sudo systemctl start myflaskapp
    sudo systemctl enable myflaskapp
+
+   ```
+   </pre>
    
    for celery (mail.py)
    
    same as the flask.service, service will be created and configuration made, afterwards reload of systemd and start the service.
-   
+
+   </pre>
+
+   ``` bash
    sudo nano /etc/systemd/system/celery.service
+
+   ```
+   </pre>
    
+   </pre>
+
+   ``` bash
    [Unit]
    Description=Celery Service
    After=network.target
@@ -187,15 +215,33 @@
    
    [Install]
    WantedBy=multi-user.target
-   
+   ```
+   </pre>
+
+   </pre>
+
+   ``` bash
    sudo systemctl daemon-reload
    sudo systemctl start celery
    sudo systemctl enable celery
+   ```
+   </pre>
    
    for Ngrok
    
-   sudo nano /etc/systemd/system/ngrok.service
+   </pre>
    
+   ``` bash
+   
+   sudo nano /etc/systemd/system/ngrok.service
+
+   ```
+   </pre>
+   
+   </pre>
+   
+   ``` bash
+
    [Unit]
    Description=Ngrok Tunnel
    After=network.target
@@ -209,17 +255,33 @@
    
    [Install]
    WantedBy=multi-user.target
+
+   ```
+   </pre>
+
+   </pre>
    
+   ``` bash
+
    sudo systemctl daemon-reload
    sudo systemctl start ngrok
    sudo systemctl enable ngrok
+
+   ```
+   </pre>
    
    Check services status:
    
+    </pre>
+   
+   ``` bash
+
    sudo systemctl status myflaskapp
    sudo systemctl status celery
    sudo systemctl status ngrok
+
    ```
+   </pre>
    
    ### Test the Endpoint:
    
@@ -233,6 +295,7 @@
    
    http://<ngrok-url>/?sendmail=someone@example.com
    http://<ngrok-url>/?talktome=true
+
    ```
 
 
