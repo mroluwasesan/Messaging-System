@@ -1,0 +1,13 @@
+[Unit]
+Description=Flask Application
+After=network.target
+
+[Service]
+User=rotimi
+Group=www-data
+WorkingDirectory=/home/rotimi/smtp-messaging
+Environment="PATH=/home/rotimi/smtp-messaging/myenv/bin"
+ExecStart=/home/rotimi/smtp-messaging/myenv/bin/python app.py
+
+[Install]
+WantedBy=multi-user.target
