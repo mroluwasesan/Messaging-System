@@ -6,7 +6,6 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from datetime import datetime
 
-
 # Initialize Flask application
 app = Flask(__name__)
 
@@ -31,7 +30,6 @@ def send_email_task(self, to_email):
     sender_email = "oluwasesanrotimi2@gmail.com"
     sender_password = "cezlmrzsloeuaawu"
 
-
     # Construct email message
     msg = MIMEMultipart()
     msg['From'] = sender_email
@@ -54,29 +52,24 @@ def send_email_task(self, to_email):
 # Route for the home page
 @app.route('/')
 def index():
-    return 'Messaging System with RabbitMQ/Celery and Python Flask'
-
-# Route to trigger email sending task
-@app.route('/sendmail', methods=['GET'])
-def send_mail():
-    to_email = request.args.get('sendmail')
-    if to_email:
-        send_email_task.delay(to_email)  # Queue the email sending task asynchronously
-        return f"Email sending task queued for {to_email}"
+    sendmail = request.args.get('sendmail')
+    talktome = request.args.get('talktome')
+    
+    if sendmail:
+        send_email_task.delay(sendmail)  # Queue the email sending task asynchronously
+        return f"Email sending task queued for {sendmail}"
+    elif talktome:
+        try:
+            # Log the current timestamp and a message to a file
+            with open('/var/log/messaging_system.log', 'a') as log_file:
+                log_file.write(f"{datetime.now()} - Log entry\n")
+            return "Logged successfully"
+        except Exception as e:
+            return f"Failed to log: {str(e)}"
     else:
-        return "No email address provided"
-
-# Route to log a message
-@app.route('/talktome', methods=['GET'])
-def talk_to_me():
-    try:
-        # Log the current timestamp and a message to a file
-        with open('/var/log/messaging_system.log', 'a') as log_file:
-            log_file.write(f"{datetime.now()} - Log entry\n")
-        return "Logged successfully"
-    except Exception as e:
-        return f"Failed to log: {str(e)}"
+        return 'Messaging System with RabbitMQ/Celery and Python Flask'
 
 # Run the Flask application
 if __name__ == '__main__':
     app.run(debug=True)
+
