@@ -134,12 +134,107 @@
    - sample file in the nginx.conf file within the config folder.
    - Replace example.com with your domain and /path/to/static/files with the actual path to your static files directory.
 
+   
+### Create a systemd from app.py, mails.py and ngrok
 
-   ## Testing the Endpoints
-   - Use ngrok to expose your local Flask application (ngrok http 5000). Then, access the endpoints:
+   ```bash
+   for flaskapp.service
+   
+   1. create service
+   
+   sudo nano /etc/systemd/system/myflaskapp.service
+   
+   3. A configuration
+    
+   [Unit]
+   Description=Flask App
+   After=network.target
+   
+   [Service]
+   User=ubuntu
+   Group=ubuntu
+   WorkingDirectory=/home/ubuntu/massage
+   ExecStart=/home/ubuntu/massage/myenv/bin/python /home/ubuntu/massage/app.py # Adjust WorkingDirectory and ExecStart paths to match the location of your app.py and virtual environment.
+   Restart=always
+   Environment="PATH=/home/ubuntu/massage/myenv/bin"
+   
+   [Install]
+   WantedBy=multi-user.target
+   
+   4. Reload Systemd and Start the Service:
+   
+   sudo systemctl daemon-reload
+   sudo systemctl start myflaskapp
+   sudo systemctl enable myflaskapp
+   
+   for celery (mail.py)
+   
+   same as the flask.service, service will be created and configuration made, afterwards reload of systemd and start the service.
+   
+   sudo nano /etc/systemd/system/celery.service
+   
+   [Unit]
+   Description=Celery Service
+   After=network.target
+   
+   [Service]
+   User=ubuntu
+   Group=ubuntu
+   WorkingDirectory=/home/ubuntu/massage
+   ExecStart=/home/ubuntu/massage/myenv/bin/celery -A mails worker --loglevel=info
+   Restart=always
+   Environment="PATH=/home/ubuntu/massage/myenv/bin"
+   
+   [Install]
+   WantedBy=multi-user.target
+   
+   sudo systemctl daemon-reload
+   sudo systemctl start celery
+   sudo systemctl enable celery
+   
+   for Ngrok
+   
+   sudo nano /etc/systemd/system/ngrok.service
+   
+   [Unit]
+   Description=Ngrok Tunnel
+   After=network.target
+   
+   [Service]
+   User=ubuntu
+   Group=ubuntu
+   ExecStart=/usr/local/bin/ngrok http 5000
+   Restart=always
+   RestartSec=10
+   
+   [Install]
+   WantedBy=multi-user.target
+   
+   sudo systemctl daemon-reload
+   sudo systemctl start ngrok
+   sudo systemctl enable ngrok
+   
+   Check services status:
+   
+   sudo systemctl status myflaskapp
+   sudo systemctl status celery
+   sudo systemctl status ngrok
+   ```
+   
+   ### Test the Endpoint:
+   
+   ```bash
+   http://<your-ec2-public-ip>:5000/?sendmail=someone@example.com
+   http://<your-ec2-public-ip>:5000/?talktome=true
+   
+   use Ngrok endpoint to test endpoints:
+   
+   sudo journalctl -u ngrok.service # to get the ngrok url if you used systemd
+   
+   http://<ngrok-url>/?sendmail=someone@example.com
+   http://<ngrok-url>/?talktome=true
+   ```
 
-   - Send email: http://your_ngrok_url/sendmail?sendmail=you_email@gmail.com
-   - Log entry: http://your_ngrok_url/talktome
 
    ## Contributing
 
