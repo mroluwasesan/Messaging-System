@@ -177,7 +177,6 @@
    4. Reload Systemd and Start the Service:
 
     </pre>
-
    ``` bash
    sudo systemctl daemon-reload
    sudo systemctl start myflaskapp
@@ -273,7 +272,6 @@
    Check services status:
    
     </pre>
-   
    ``` bash
 
    sudo systemctl status myflaskapp
