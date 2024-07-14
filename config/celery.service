@@ -7,7 +7,7 @@ User=rotimi
 Group=www-data
 WorkingDirectory=/home/rotimi/smtp-messaging
 Environment="PATH=/home/rotimi/smtp-messaging/myenv/bin"
-ExecStart=/home/rotimi/smtp-messaging/myenv/bin/celery -A app.celery worker --loglevel=info
+ExecStart=/home/rotimi/myenv/bin/celery -A app.celery app --loglevel=info
 
 [Install]
 WantedBy=multi-user.target

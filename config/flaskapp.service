@@ -7,7 +7,7 @@ User=rotimi
 Group=www-data
 WorkingDirectory=/home/rotimi/smtp-messaging
 Environment="PATH=/home/rotimi/smtp-messaging/myenv/bin"
-ExecStart=/home/rotimi/smtp-messaging/myenv/bin/python app.py
+ExecStart=/home/rotimi/myenv/bin/python /home/rotimi/smtp-messaging/app.py
 
 [Install]
 WantedBy=multi-user.target
